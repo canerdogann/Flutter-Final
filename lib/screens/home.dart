@@ -240,33 +240,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: Color.fromARGB(255, 5, 40, 70)),
                     decoration: InputDecoration(
                       hintText:
                           AppLocalizations.of(context).getTranslate('Ara...'),
-                      hintStyle: TextStyle(color: Colors.grey[400]),
-                      prefixIcon: Icon(Icons.search, color: Colors.grey),
+                      hintStyle:
+                          TextStyle(color: Color.fromARGB(255, 5, 40, 70)),
+                      prefixIcon: Icon(Icons.search,
+                          color: Color.fromARGB(255, 5, 40, 70)),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Color.fromARGB(255, 255, 255, 255),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide(
-                          color: Colors.grey[400]!,
-                          width: 1,
+                          color: Color.fromARGB(255, 5, 40, 70),
+                          width: 1.0,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide(
-                          color: Colors.grey[400]!, // Açık gri
-                          width: 1,
+                          color: Color.fromARGB(255, 5, 40, 70),
+                          width: 1.0,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide(
-                          color: Colors.grey[400]!, // Açık gri
-                          width: 2,
+                          color: Color.fromARGB(255, 5, 40, 70),
+                          width: 2.0,
                         ),
                       ),
                     ),
