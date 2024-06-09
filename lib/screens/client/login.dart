@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                // Email Alanı
+
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Şifre Alanı
+
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,

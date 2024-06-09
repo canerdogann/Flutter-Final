@@ -55,7 +55,7 @@ class _AutomotiveState extends State<Automotive> {
 
   @override
   Widget build(BuildContext context) {
-    Color textColor = Colors.black; //Theme.of(context).textTheme.bodyText1!.color!; //todo
+    Color textColor = Colors.black; 
 
     return Scaffold(
       appBar: AppBar(
