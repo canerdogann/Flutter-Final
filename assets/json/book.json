@@ -1,0 +1,16 @@
+[
+    {
+      "id": 4,
+      "name": "Küçük Ağa",
+      "in-stock": true,
+      "price": 221.80,
+      "photo": "https://i.dr.com.tr/cache/500x400-0/originals/0000000145836-1.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Nutuk",
+      "in-stock": true,
+      "price": 181.25,
+      "photo": "https://img.kitapyurdu.com/v1/getImage/fn:11788244/wh:true/wi:220"
+    }
+  ]

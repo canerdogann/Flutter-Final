@@ -1,0 +1,20 @@
+{
+    "home_title": "Crez-Alısveris",
+    "add_to_basket": "Sepete Ekle",
+    "products": "Urunler",
+    "favorites": "Favoriler",
+    "cart": "Sepet",
+    "in-stock": "Mevcut",
+    "not-available": "Tukendi",
+    "added-to-cart": "Urun Sepete Eklendi.",
+    "remove-favorite": "Favoriden Kaldir",
+    "remove-cart": "Sepetten Kaldir",
+    "cart-empty": "Sepetinizde hic urun bulunmamaktadir.",
+    "settings": "Ayarlar",
+    "connection-error": "Lutfen Internet Baglantinizi Kontrol Ediniz.",
+    "reload": "Yenile",
+    "select-language": "Lutfen Istediginiz Dili Seciniz:",
+    "sign-out": "Çıkış Yap",
+    "hakkımızda": "Hakkımızda"
+ 
+}
