@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+
+// ignore: unused_import
+import '../../bloc/products/products_cubit.dart';
 import '../bloc/cart/cart_cubit.dart';
 import '../bloc/client/client_cubit.dart';
 import '../core/localizations.dart';
-// ignore: unused_import
-import '../../bloc/products/products_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -120,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 secondary: clientCubit.state.darkMode
                     ? const Icon(Icons.sunny)
                     : const Icon(Icons.nightlight),
-                title: const Text('Gece Modu',
+                title: const Text('Gece Mod',
                     style:
                         TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
               ),
@@ -241,19 +240,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
-                    style:
-                        TextStyle(color: Colors.grey), 
+                    style: TextStyle(color: Colors.grey),
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context).getTranslate('Ara...'),
-                      hintStyle: TextStyle(
-                          color: Colors.grey[400]), 
+                      hintText:
+                          AppLocalizations.of(context).getTranslate('Ara...'),
+                      hintStyle: TextStyle(color: Colors.grey[400]),
                       prefixIcon: Icon(Icons.search, color: Colors.grey),
-                      filled: true, 
-                      fillColor: Colors.white, 
+                      filled: true,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide(
-                          color: Colors.grey[400]!, 
+                          color: Colors.grey[400]!,
                           width: 1,
                         ),
                       ),
@@ -304,30 +302,46 @@ class _HomeScreenState extends State<HomeScreen> {
                               .getTranslate('Automotive'), () {
                         GoRouter.of(context).go('/automotive');
                       }),
-                      _buildCategoryItem(Icons.book, AppLocalizations.of(context)
-                              .getTranslate('Book'), () {
+                      _buildCategoryItem(Icons.book,
+                          AppLocalizations.of(context).getTranslate('Book'),
+                          () {
                         GoRouter.of(context).go('/book');
                       }),
-                      _buildCategoryItem(Icons.local_florist, AppLocalizations.of(context).getTranslate('Cosmetics'), () {
+                      _buildCategoryItem(
+                          Icons.local_florist,
+                          AppLocalizations.of(context)
+                              .getTranslate('Cosmetics'), () {
                         GoRouter.of(context).go('/cosmetics');
                       }),
-                      _buildCategoryItem(Icons.games_outlined, AppLocalizations.of(context).getTranslate('Gaming'), () {
+                      _buildCategoryItem(Icons.games_outlined,
+                          AppLocalizations.of(context).getTranslate('Gaming'),
+                          () {
                         GoRouter.of(context).go('/gaming');
                       }),
-                      _buildCategoryItem(Icons.computer, AppLocalizations.of(context).getTranslate('Electronics'), () {
+                      _buildCategoryItem(
+                          Icons.computer,
+                          AppLocalizations.of(context)
+                              .getTranslate('Electronics'), () {
                         GoRouter.of(context).go('/electronics');
                       }),
-                      _buildCategoryItem(Icons.food_bank, AppLocalizations.of(context).getTranslate('Garden'), () {
+                      _buildCategoryItem(Icons.food_bank,
+                          AppLocalizations.of(context).getTranslate('Garden'),
+                          () {
                         GoRouter.of(context).go('/garden');
                       }),
-                      _buildCategoryItem(Icons.dry_cleaning_rounded, AppLocalizations.of(context).getTranslate('Fashion'),
+                      _buildCategoryItem(Icons.dry_cleaning_rounded,
+                          AppLocalizations.of(context).getTranslate('Fashion'),
                           () {
                         GoRouter.of(context).go('/fashion');
                       }),
-                      _buildCategoryItem(Icons.music_note,  AppLocalizations.of(context).getTranslate('Music'), () {
+                      _buildCategoryItem(Icons.music_note,
+                          AppLocalizations.of(context).getTranslate('Music'),
+                          () {
                         GoRouter.of(context).go('/music');
                       }),
-                      _buildCategoryItem(Icons.sports_soccer,  AppLocalizations.of(context).getTranslate('Sports'), () {
+                      _buildCategoryItem(Icons.sports_soccer,
+                          AppLocalizations.of(context).getTranslate('Sports'),
+                          () {
                         GoRouter.of(context).go('/sports');
                       }),
                     ],
@@ -336,7 +350,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 26.0),
                 Center(
                   child: Text(
-                    AppLocalizations.of(context).getTranslate('Bütün ürünlere ulaşmak için'),
+                    AppLocalizations.of(context)
+                        .getTranslate('Bütün ürünlere ulaşmak için'),
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
