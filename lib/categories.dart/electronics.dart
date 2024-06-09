@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_dev/bloc/client/client_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../bloc/cart/cart_cubit.dart';
 import '../../bloc/products/products_cubit.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../core/localizations.dart';
 
 class Electronics extends StatefulWidget {
@@ -21,7 +20,7 @@ class _ElectronicsState extends State<Electronics> {
       "id": 1,
       "name": "MacBook Pro 2024 M2",
       "in-stock": true,
-      "price": 65000.00,
+      "price": 80000.00,
       "photo":
           "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/refurb-mbp14-m2-silver-202303?wid=2000&hei=1536&fmt=jpeg&qlt=95&.v=1680103614090",
     },
@@ -29,7 +28,7 @@ class _ElectronicsState extends State<Electronics> {
       "id": 21,
       "name": "İphone 14 Pro 256GB",
       "in-stock": true,
-      "price": 69000.00,
+      "price": 40000.00,
       "photo":
           "https://www.notebookcheck-tr.com/typo3temp/_processed_/8/e/csm_Bild_Apple_iPhone_14_Pro-3956_797631d4b6.jpg",
     },
@@ -57,19 +56,20 @@ class _ElectronicsState extends State<Electronics> {
 
   @override
   Widget build(BuildContext context) {
-     Color textColor = Colors.black; //Theme.of(context).textTheme.bodyText1!.color!; //todo
+    Color textColor =
+        Colors.black; //Theme.of(context).textTheme.bodyText1!.color!; //todo
 
     return Scaffold(
       appBar: AppBar(
-                  backgroundColor: Color.fromARGB(255, 5, 40, 70),
-
+        backgroundColor: Color.fromARGB(255, 5, 40, 70),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             GoRouter.of(context).go("/home");
           },
         ),
-        title: Text(AppLocalizations.of(context).getTranslate("products"),  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
+        title: Text(AppLocalizations.of(context).getTranslate("products"),
+            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
