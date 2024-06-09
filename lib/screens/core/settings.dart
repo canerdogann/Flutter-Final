@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -17,66 +17,107 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String locationInfo = "";
   bool loading = false;
 
-  @override
-  void initState() {
-    super.initState();
-    controlPermission();
-  }
-
   controlPermission() async {
     var status = await Permission.camera.status;
 
     switch (status) {
       case (PermissionStatus.granted):
         setState(() {
-          camResult = "Yetki Alınmış.";
+          camResult = "Yetki Alinmis.";
         });
         break;
       case (PermissionStatus.denied):
         setState(() {
-          camResult = "Yetki Rededilmiş.";
+          camResult = "Yetki Rededilmis.";
         });
         break;
       case PermissionStatus.restricted:
         setState(() {
-          camResult = "Kısıtlanmış Yetki, hiç türlü alamayız.";
+          camResult = "Kisitlanmis Yetki, hic turlu alamayiz.";
         });
         break;
       case PermissionStatus.limited:
+        // TODO: Handle this case.
         setState(() {
-          camResult = "Kısıtlanmış Yetki, Kullanıcı kısıtlı yetki seçmiş.";
+          camResult = "Kisitlanmis Yetki, hKullanici kisitli yetki secmis.";
         });
         break;
       case PermissionStatus.permanentlyDenied:
         setState(() {
-          camResult = "Kullanıcı, Yetki Vermesini Engelledi";
+          camResult = "Yetki vermesin diye istemis kullanic";
         });
         break;
       case PermissionStatus.provisional:
         setState(() {
-          camResult = "Geçici Yetki";
+          camResult = "Provisional";
         });
         break;
     }
 
-    await Permission.locationAlways.request().then((value) {
-      if (value.isGranted) {
-        setState(() {
-          locationResult = "Yetki Verildi";
-        });
+    await Permission.locationAlways.onDeniedCallback(() {
+      // Your code
+      setState(() {
+        locationResult = "Yetki vermeyi reddetti";
+      });
+    }).onGrantedCallback(() async {
+      // Your code
+      setState(() {
+        locationResult = "Verdi Yetgiyi";
+      });
 
-        Permission.camera.request().then((value) {
-          setState(() {
-            locationAllwaysResult =
-                "HER ZAMAN KONUM ERİŞİMİ " + value.toString();
-          });
-        });
-      } else {
+      await Permission.camera.onDeniedCallback(() {
+        // Your code
         setState(() {
-          locationResult = "Yetki Reddedildi";
+          locationAllwaysResult =
+              "HERZAMAN KONUM ERISIM Yetki vermeyi reddetti";
         });
-      }
-    });
+      }).onGrantedCallback(() {
+        // Your code
+        setState(() {
+          locationAllwaysResult = "HERZAMAN KONUM ERISIM " + status.toString();
+        });
+      }).onPermanentlyDeniedCallback(() {
+        // Your code
+        setState(() {
+          locationAllwaysResult = "HERZAMAN KONUM ERISIM " + status.toString();
+        });
+      }).onRestrictedCallback(() {
+        // Your code
+        setState(() {
+          locationAllwaysResult = "HERZAMAN KONUM ERISIM " + status.toString();
+        });
+      }).onLimitedCallback(() {
+        // Your code
+        setState(() {
+          locationAllwaysResult = "HERZAMAN KONUM ERISIM " + status.toString();
+        });
+      }).onProvisionalCallback(() {
+        // Your code
+        setState(() {
+          locationAllwaysResult = "HERZAMAN KONUM ERISIM " + status.toString();
+        });
+      }).request();
+    }).onPermanentlyDeniedCallback(() {
+      // Your code
+      setState(() {
+        locationResult = "Herzaman icin engelledi";
+      });
+    }).onRestrictedCallback(() {
+      // Your code
+      setState(() {
+        locationResult = "Kisitlanmis ve alinamaz";
+      });
+    }).onLimitedCallback(() {
+      // Your code
+      setState(() {
+        locationResult = "Kullanici kisitlanmis yetki vermis";
+      });
+    }).onProvisionalCallback(() {
+      // Your code
+      setState(() {
+        locationResult = "Provisonal";
+      });
+    }).request();
   }
 
   getLocation() async {
@@ -87,10 +128,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     bool serviceEnabled;
     LocationPermission permission;
 
+    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
       setState(() {
-        locationInfo = "Konum Hizmetleri Ayarlardan Kapalı";
+        locationInfo = "Konum Hizmetleri Ayarlardan Kapali";
       });
 
       return Future.error('Location services are disabled.');
@@ -100,31 +145,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
         setState(() {
-          locationInfo = "Kullanıcı, Yetki Vermeyi İnat Etti";
+          locationInfo = "Adam inat etmis yetki vermiyor";
         });
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
       setState(() {
-        locationInfo = "Kullanıcı, Bilgi Vermek İstemiyor, Tamamen Kapalı";
+        locationInfo = "Abi bilgi vermek istemiyor, tamamen kapatmis";
       });
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
     final pos = await Geolocator.getCurrentPosition();
 
     setState(() {
       locationInfo = '''
-        Accuracy: ${pos.accuracy}
-        Longitude: ${pos.longitude}
-        Latitude: ${pos.latitude}
-        Speed: ${pos.speed}
-        Speed Accuracy: ${pos.speedAccuracy}
-        Data Time: ${pos.timestamp}
+        accuracy: ${pos.accuracy}
+        longitude: ${pos.longitude}
+        latitude: ${pos.latitude}
+        speed: ${pos.speed}
+        speed Dikkati: ${pos.speedAccuracy}
+        veri zamani: ${pos.timestamp}
         ''';
     });
 
@@ -134,91 +187,60 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controlPermission();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 5, 40, 70),
-        title: const Text(
-          "Settings",
-          style: TextStyle(color: Colors.white),
-        ),
+        backgroundColor: Color.fromARGB(255, 5, 40, 70),
+        title: const Text("Settings",
+            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
       ),
       body: SizedBox.expand(
         child: ListView(
           children: [
-            _buildExpansionTile(
-              title: "Camera Permission",
-              result: camResult,
-              onPressed: () async {
-                final status = await Permission.camera.request();
-                print(status);
-              },
+            ExpansionTile(
+              title: Text("Camera Permission"),
+              children: [
+                Text(camResult),
+                Gap(20),
+                ElevatedButton(
+                  onPressed: () async {
+                    // ignore: unused_local_variable
+                    final status = await Permission.camera.request();
+                  },
+                  child: Text("Yetki iste"),
+                ),
+              ],
             ),
-            _buildExpansionTile(
-              title: "Location Permission",
-              result: locationResult,
-              subtitle: "Allways Status: $locationAllwaysResult",
+            ExpansionTile(
+              title: Text("Location Permission"),
+              children: [
+                Text(locationResult),
+                Divider(),
+                Text("Allways Status: "),
+                Text(locationAllwaysResult),
+              ],
             ),
-            _buildExpansionTile(
-              title: "Location Info",
-              onPressed: getLocation,
-              icon: Icons.location_on,
-              result: locationInfo,
+            ExpansionTile(
+              title: const Text("Location Info"),
+              children: [
+                IconButton(
+                  onPressed: getLocation,
+                  icon: const Icon(Icons.location_on),
+                ),
+                const Divider(),
+                Text(locationInfo),
+              ],
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildExpansionTile({
-    required String title,
-    required String result,
-    VoidCallback? onPressed,
-    IconData? icon,
-    String? subtitle,
-  }) {
-    return ExpansionTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.blue, // Title text color
-        ),
-      ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                result,
-                style: TextStyle(
-                  color: Colors.green, // Result text color
-                ),
-              ),
-              if (subtitle != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    color: Colors.grey, // Subtitle text color
-                  ),
-                ),
-              ],
-              if (onPressed != null) ...[
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: onPressed,
-                  child: const Text("Yetki İste"),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
