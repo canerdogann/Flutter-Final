@@ -1,11 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_dev/bloc/cart/cart_cubit.dart';
 import 'package:flutter_advanced_dev/bloc/client/client_cubit.dart';
 import 'package:flutter_advanced_dev/bloc/products/products_cubit.dart';
 import 'package:flutter_advanced_dev/core/localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -34,7 +34,8 @@ class _BookState extends State<Book> {
 //json dosyası oluşturuldu ve içindeki bilgiler çekildi bunu tüm kategorilere uygulayabiliriz tek degiştirmemiz gereken yer
 //'assets/json/book.json' bu kısım
   Future<void> _loadProductsFromJson() async {
-    final String response = await rootBundle.loadString('assets/json/book.json');
+    final String response =
+        await rootBundle.loadString('assets/json/book.json');
     final data = await json.decode(response);
     setState(() {
       products = data;
